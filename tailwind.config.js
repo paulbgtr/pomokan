@@ -13,4 +13,7 @@ export default {
     extend: {},
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["nord"],
+  },
 };
