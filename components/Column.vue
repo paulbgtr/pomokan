@@ -13,10 +13,12 @@ const props = defineProps({
 })
 
 const addTask = () => {
-    const newTask = prompt('Enter task description:')
-    if (newTask) {
-        emit('addTask', props.column.id, newTask)
+    const taskName = prompt("Enter task name:");
+    if (taskName === null || taskName.trim() === "") {
+        return;
     }
+
+    emit('addTask', props.column.id, taskName)
 }
 </script>
 
@@ -25,7 +27,7 @@ const addTask = () => {
         <h2 class="mb-2 text-lg font-bold text-center">{{ column.name }}</h2>
         <button class="w-full mb-2 btn btn-primary" @click="addTask">New Task</button>
         <div class="flex-grow space-y-2 overflow-y-auto">
-            <Task v-for="task in tasks" :key="task" :task="task" />
+            <Task v-for="task in tasks.reverse()" :key="task" :task="task" />
         </div>
     </div>
 </template>
