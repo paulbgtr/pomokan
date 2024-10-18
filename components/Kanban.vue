@@ -26,6 +26,8 @@ const addColumn = (name) => {
 const addTask = (columnId, task) => {
     const column = columns.value.find(col => col.id === columnId)
     if (column) {
+        const maxTaskId = Math.max(0, ...columns.value.flatMap(col => col.tasks.map(t => t.id)))
+        task.id = maxTaskId + 1
         column.tasks.push(task)
     }
 }
