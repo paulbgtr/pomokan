@@ -5,7 +5,13 @@ const columns = ref([
     {
         id: 1,
         name: 'Todo',
-        tasks: [],
+        tasks: [
+            {
+                id: 1,
+                name: 'Task 1',
+                done: false
+            }
+        ],
     },
 ])
 
@@ -24,6 +30,13 @@ const addTask = (columnId, task) => {
     }
 }
 
+const deleteTask = (taskId) => {
+    const task = columns.value.find(col => col.tasks.find(t => t.id === taskId))
+    if (task) {
+        task.tasks = task.tasks.filter(t => t.id !== taskId)
+    }
+}
+
 const toggleDone = (columnId, taskId) => {
     const column = columns.value.find(col => col.id === columnId)
     if (column) {
@@ -38,7 +51,7 @@ const toggleDone = (columnId, taskId) => {
 <template>
     <section class="flex flex-grow mt-6 overflow-x-auto">
         <Column v-for="column in columns" :key="column.id" :column="column" :tasks="column.tasks" @addTask="addTask"
-            @toggleDone="toggleDone" />
+            @deleteTask="deleteTask" @toggleDone="toggleDone" />
         <NewColumn @addColumn="addColumn" />
     </section>
 </template>

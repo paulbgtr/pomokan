@@ -1,5 +1,5 @@
 <script setup>
-const emit = defineEmits(['addTask', 'toggleDone'])
+const emit = defineEmits(['addTask', 'deleteTask', 'toggleDone'])
 
 const props = defineProps({
     column: {
@@ -25,6 +25,10 @@ const addTask = () => {
     })
 }
 
+const deleteTask = (taskId) => {
+    emit('deleteTask', taskId)
+}
+
 const toggleDone = (taskId) => {
     emit('toggleDone', props.column.id, taskId)
 }
@@ -35,7 +39,8 @@ const toggleDone = (taskId) => {
         <h2 class="mb-2 text-lg font-bold text-center">{{ column.name }}</h2>
         <button class="w-full mb-2 btn btn-primary" @click="addTask">New Task</button>
         <div class="flex-grow space-y-2 overflow-y-auto">
-            <Task v-for="task in tasks.reverse()" :key="task" :task="task" @toggleDone="toggleDone" />
+            <Task v-for="task in tasks.reverse()" :key="task" :task="task" @deleteTask="deleteTask"
+                @toggleDone="toggleDone" />
         </div>
     </div>
 </template>
